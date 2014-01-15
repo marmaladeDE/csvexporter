@@ -45,14 +45,13 @@ in der "protected $_entry"
 
 erstellt man die Struktur der csv Datei
 
-'header' - hier werden die Spalten Namen nach einander geschrieben.
+- 'header' - hier werden die Spalten Namen nach einander geschrieben.
 
 Einzelne Spaltenname werden mit ; getrennt.
 
-wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen,
-\n an den letzten Spaltennamen anhängen.
+wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen, \n an den letzten Spaltennamen anhängen.
 
-'fields' - hier werden die Inhalte der spalten geschrieben.
+- 'fields' - hier werden die Inhalte der spalten geschrieben.
 
 Einzelne Datensätze werden in #oxid# geschrieben und mit | getrennt.
 
@@ -60,16 +59,14 @@ Einzelne Datensätze werden in #oxid# geschrieben und mit | getrennt.
 
 #oxshortdesc#/#oxlongdesc# so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
 
-'separator' - hier wird das Trennzeichen für die csv Datei eingetragen.
+- 'separator' - hier wird das Trennzeichen für die csv Datei eingetragen.
 
-verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können,
-mit dem Separator wird die Zeilen und Spalten Struktur definiert.
+verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können, mit dem Separator wird die Zeilen und Spalten Struktur definiert.
 
 Eigene Konfigurationen
 ----------------------
 
-man kann in den einzelnen Exportern alle Funktionen aus der marmCsvExporter.php
-überschreiben und erweitern.
+man kann in den einzelnen Exportern alle Funktionen aus der marmCsvExporter.php überschreiben und erweitern.
 
 Eine nicht vorhandene extra spalte hinzufügen, aber wie?
 
@@ -81,10 +78,8 @@ in der "protected $_entry"
 
 - in 'fields' kommt ein neuer Marker #color#.
 
-- jetzt muss die Funktion "getDataByMarker" aus der marmCsvExporter.php
-  in unserem exporter um ein Marker erweitert werden.
+- jetzt muss die Funktion "getDataByMarker" aus der marmCsvExporter.php in unserem exporter um ein Marker erweitert werden.
 
 - dem neuen Marker geben wir eine Funktion.
 
-- und zum Schluss wir die eigentlich Funktion in unserem exporter geschrieben die 
-  die Farbe der Varianten Produkte ausließt und den an den Marker übergibt.
+- und zum Schluss wir die eigentlich Funktion in unserem exporter geschrieben die die Farbe der Varianten Produkte ausließt und den an den Marker übergibt.

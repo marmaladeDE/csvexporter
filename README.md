@@ -41,18 +41,15 @@ in the "protected $ _config"
 CSV configurations
 -------------------
 
-in the "protected $ _Entry"
+in the "protected $ _Entry" you creat the structure of the csv file
 
-you creat the structure of the csv file
-
-'header' - here the column names are written after the other.
+- 'header' - here the column names are written after the other.
 
 Individual column name with ; separately.
 
-if you need a blank line between the header and the data records,
-write \n in the last column name.
+if you need a blank line between the header and the data records, write \n in the last column name.
 
-'fields' - here are written contents of the column.
+- 'fields' - here are written contents of the column.
 
 Individual records are written to #oxid#  and separated by |.
 
@@ -60,16 +57,14 @@ Individual records are written to #oxid#  and separated by |.
 
 #oxshortdesc#/#oxlongdesc# then the second output if the first is not available.
 
-'separator' - here the delimiter for the csv file is entered.
+- 'separator' - here the delimiter for the csv file is entered.
 
-various data feeds need different requirements to be able to read the csv file to which
-with the separator structure, the rows and columns will be defined.
+various data feeds need different requirements to be able to read the csv file to which with the separator structure, the rows and columns will be defined.
 
 own configurations
 ------------------
 
-can be seen in the individual Exportern all functions from the marmCsvExporter.php
-override and extend.
+can be seen in the individual Exportern all functions from the marmCsvExporter.php override and extend.
 
 A non existent Extra column to add, but how?
 
@@ -81,12 +76,10 @@ in the "protected $ _Entry"
 
 - In 'fields' comes a new marker #color#.
 
-- Now has the "getDataByMarker" from the marmCsvExporter.php
-  be extended in our exporter to a marker.
+- Now has the "getDataByMarker" from the marmCsvExporter.php be extended in our exporter to a marker.
 
 - The new marker we give a new function.
 
-- And finally we actually function in our exporter written
-  reads out the color of the variants products and passes the marker.
+- And finally we actually function in our exporter written reads out the color of the variants products and passes the marker.
 
 
