@@ -7,7 +7,7 @@ How to use
 ----------
 1.    Place the whole module in your shop in
 
-          modules/marm/marmcsvexport
+          modules/marm/csvexporter
 
 2.    Configure, extend or build new exporter like the included ones
 
