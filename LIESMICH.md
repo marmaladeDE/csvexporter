@@ -1,10 +1,9 @@
-CSV Exporter
-============
+#CSV Exporter
 
-Eine Sammlung von Skripten die über einen cronjob Shop Produkte in eine csv Datei exportieren
+Eine Sammlung von Skripten, die über einen cronjob Shop Produkte in eine csv Datei exportiert
 
-Installieren und Konfigurieren
-------------------------------
+##Installieren und Konfigurieren
+
 1.  Legen Sie das gesamte Modul in Ihrem Shop in
 
           modules/marm/csvexporter
@@ -16,21 +15,19 @@ Installieren und Konfigurieren
 4.  Genießen Sie das Ergebnis
 
 
-Hinweise
---------
+##Hinweise
+
 
 Getestet auf Oxid CE 4.6.5
 
-Version
--------
+##Version
+
 Aktuelle Version 1.0
 
 
-Exporter Konfigurieren
-======================
+#Exporter Konfigurieren
 
-Grund Konfigurationen
----------------------
+##Grund Konfigurationen
 
 in der "protected $_config" 
 
@@ -38,8 +35,7 @@ in der "protected $_config"
 
 'shippingcost' - hier kann man ein array füllen mit Versandkosten
  
-CSV Konfigurationen
--------------------
+##CSV Konfigurationen
 
 in der "protected $_entry"
 
@@ -63,8 +59,7 @@ Einzelne Datensätze werden in #oxid# geschrieben und mit | getrennt.
 
 verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können, mit dem Separator wird die Zeilen und Spalten Struktur definiert.
 
-Eigene Konfigurationen
-----------------------
+##Eigene Konfigurationen
 
 man kann in den einzelnen Exportern alle Funktionen aus der marmCsvExporter.php überschreiben und erweitern.
 
