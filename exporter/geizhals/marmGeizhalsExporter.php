@@ -46,7 +46,7 @@ class marmGeizhalsExporter extends marmCsvExporter
 	
 
     protected $_entry = array(
-        'header'    => "Bezeichnung;Hersteller;Herst.Nr.;Preis;Verfügbarkeit;VersandDE;EAN;Deeplink;Artikelnummer;Beschreibung;Kategorie;Bildlink;",
+        'header'    => "Bezeichnung;Hersteller;Herst.Nr.;Preis;Verfügbarkeit;VersandDE;EAN;Deeplink;Artikelnummer;Beschreibung;Kategorie;Bildlink",
         'fields'    => '#brand#+#oxtitle#+#oxvarselect#|#brand#|#mpn#|#oxprice#|#availability#|#shippingcost#|#oxdistean#|#seo_url_parent#|#oxid#/#mpn#/#ERROR#|#oxshortdesc#/#oxlongdesc#|#categoryPath#|#imagelink#',
         'separator' => '~'
     );

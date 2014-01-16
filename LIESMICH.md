@@ -1,19 +1,25 @@
 CSV Exporter
 ============
 
-Eine Sammlung von Skripten, die über einen cronjob Shop Produkte in eine csv Datei exportieren
+Eine Sammlung von Skripten, die über einen Cronjob Shop-Produkte in eine CSV-Datei exportiert.
 
 Installieren und Konfigurieren
 ------------------------------
-1.  Legen Sie das gesamte Modul in Ihrem Shop in
+1.  Legen Sie alle Dateien des Moduls in Ihrem Shop in das folgende Verzeichnis:
 
           modules/marm/csvexporter
 
-2.  Konfigurieren, erweitern oder Schreiben Sie neue Exporter
+2.  Konfigurieren, erweitern oder schreiben Sie neue Exporter. 
+Einige Exporter sind bereits enthalten. An diesen können Sie sich orentieren.
+Die Exporter liegen im Verzeichnis `exporter`.
 
-3.  Rufen Sie Ihren Exportscript über ein cronjob auf
+3.  Nun können Sie Ihre Exportscripte aufrufen und die CSV-Datei erstellen. 
+Dies können Sie entweder manuell durchführen oder über einen Cronjob automatisieren.
+Der Aufruf lautet: 
 
-4.  Genießen Sie das Ergebnis
+        shopurl.de/modules/marm/csvexporter/exporter/IHR-EXPORTER/IHR-EXPORTER.php
+
+4.  Schon fertig. Sie können nun Ihre CSV-Datei an die Preisportale melden.
 
 
 Hinweise
@@ -26,21 +32,23 @@ Version
 Aktuelle Version 1.0
 
 
-Exporter Konfigurieren
+Exporter konfigurieren
 ======================
 
-Grund Konfigurationen
----------------------
+Grundkonfiguration
+------------------
 
-in der protected Variable `$_config` 
+Im oberen Bereich Ihres Exporterscripts finden Sie die Konfiguration. 
+Diese ist in der Variablen `$_config` als Array hinterlegt.
+Folgende Optionen stehen Ihnen zur Verfügung.
 
-        'export_parents'                => Anzeigen von Eltern Produkten in der csv Datei
+        'export_parents'                => Anzeigen von Eltern Produkten in der CSV-Datei
         'filename'                      => Pfad und Dateiname
         'limit'                         => Limit für Export
         'debug'                         => debug Option An/Aus, für Entwickler
         'silent'                        => debug Ausgaben An/Aus, für Entwickler
         'header'                        => Kopfzeile An/Aus
-        'langid'                        => Sprach id, für welche Sprache Exportiert werden soll
+        'langid'                        => Sprachid, für welche Sprache Exportiert werden soll
         'shippingcost'                  => Versand Optionen      
         'productLinkPrefix'             => Standard Produkt URL Präfix
         'geizhalsProductLinkParameters' => Exporter spezifischer Produkt Parameter    
@@ -52,46 +60,42 @@ in der protected Variable `$_config`
         'netPrices'                     => Nettopreise An/Aus
         'categoryPathSeparator'         => Trennzeichen für die Kategoriepfade
 
-CSV Konfigurationen
--------------------
+CSV-Konfiguration
+-----------------
 
-In der protected Variable `$_entry` wird die Struktur der csv Datei erstellt.
+Nun geht es darum, die Ausgabe der Daten zu steuern.
+In der Variablen `$_entry` werden die Felder, die Sie exportieren möchten, angegeben.
 
-- in dem `header` schreiben wir nach einander die Spalten Namen, die mit `;` getrennt werden.
+Das Array enthält folgende Optionen.
 
-wenn man eine Leerzeile zwischen der Kopfzeile und den Datensätzen braucht, schreiben wir ein `\n` an den letzten Spaltennamen.
+        'header'    => Spalten Namen für die CSV-Datei.
+        'fields'    => Spalten Inhalte für die CSV-Datei.
+        'separator' => Trennzeichen der CSV-Datei.
 
-- in den `fields` werden die Inhalte der spalten geschrieben.
+Hier noch einige Tipps:
 
-Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
+- Die Spalten Namen werden im `header` nacheinander geschrieben und mit `;` getrennt.
 
-`#oxid#+#oxtitle#` so werden mehrere Inhalte in einer spalte ausgegeben.
+- Um eine Leerzeile zwischen der Kopfzeile und den Inhalten in der CSV-Datei zu erzeugen, schreiben Sie ein `\n` an den letzen Spaltennamen.
 
-`#oxshortdesc#/#oxlongdesc#` so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
+- Die Spalteninhalte werden in Markern `#IHRER MARKER#` geschrieben und mit `|` getrennt.
 
-- in dem `separator` wird das Trennzeichen für die csv Datei eingetragen.
+- Man kann mehrere Marker in einem Datensatz ausgeben, das sieht dann so aus `#Marker 1#+#Marker 2#`.
 
-Mit dem Separator wird die Zeilen und Spalten Struktur definiert.
+- Oder man möchte einen Fallback haben, dann sieht der Marker so aus `#Marker 1#/#Marker 2#`.
 
 Eigene Konfigurationen
 ----------------------
 
-Man kann in den einzelnen Exportern alle Funktionen aus der **marmCsvExporter.php** überschreiben und erweitern.
+Im unteren Bereich Ihres Exporterscripts können Sie nun eigene Funktionen schreiben.
+Alle Funktionen aus der **marmCsvExporter.php** können überschrieben und erweitert werden.
 
 Eine nicht vorhandene Spalte hinzufügen, aber wie?
 
-als Bsp.: wollen wir das Attribut Farbe der einzelnen Varianten Produkte auslesen
+Bsp.: Wir wollen das Attribut **Farbe** der einzelnen Variantenprodukte in die CSV-Datei exportiert haben.
 
-in der protected Variable `$_entry`:
+Dazu schreiben wir im `header` den neuen Spaltennamen `Farbe`. In das Feld `fields` kommt ein neuer Marker namens `#color#`.
 
-- in `header` schreiben wir den neuen Spaltennamen `Farbe`.
-
-- in `fields` kommt ein neuer Marker `#color#`.
-
-im Export Script:
-
-- jetzt muss die Funktion `getDataByMarker($marker)` aus der **marmCsvExporter.php** in unserem exporter um ein Marker erweitert werden.
-
-- dem neuen Marker geben wir eine Funktion.
-
-- und zum Schluss wird die eigentliche Funktion in unserem exporter geschrieben, die die Farbe der Varianten Produkte ausließt und den an den Marker übergibt.
+Nun schreiben wir unsere Funktionen, dazu empfiehlt sich die Funktion `getDataByMarker($marker)` aus der **marmCsvExporter.php** zu erweitern.
+In der wir einen neuen Marker setzen und dem eine Fuktion geben.
+Danach können wir die eigentliche Funktion in unserem Exporterscript schreiben die die Farbe der Produkte ausliest.

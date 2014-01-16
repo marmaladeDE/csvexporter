@@ -7,7 +7,7 @@ Installing and Configuration
 ----------------------------
 1.  Place the entire module in your shop in
 
-          modules / marm / csvexporter
+        modules/marm/csvexporter
 
 2.  Configure, upgrade , or writing new Exporter
 
