@@ -1,11 +1,14 @@
 <?php
+
 /**
- * This file is NOT freeware and could not be redistributed.
- * You could buy additional licences at http://marmalade.de/shop/
- * 
- * @link      http://www.marmalade.de
- * @copyright (C) marmalade GmbH | Joscha Krug
- * @author Joscha Krug <krug@marmalade.de>
+ * This file is part of csvexporter Module for OXID eShop CE/PE/EE.
+ *
+ * csvexporter is free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License.
+ *
+ *
+ * @link http://marmalade.de
+ * @copyright (C) marmalade.de 2014
  */
 
 //Set some helpful power ;-)
