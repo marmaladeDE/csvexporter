@@ -5,15 +5,15 @@ collection of a scripts, Export via cronjob your Shop products in a csv file
 
 Installing and Configuration
 ----------------------------
-1 Place the entire module in your shop in
+1.  Place the entire module in your shop in
 
           modules / marm / csvexporter
 
-2 Configure, upgrade , or writing new Exporter
+2.  Configure, upgrade , or writing new Exporter
 
-3 Call your export script via cronjob
+3.  Call your export script via cronjob
 
-4 Enjoy the result
+4.  Enjoy the result
 
 
 Notes
@@ -53,25 +53,25 @@ in the protected variable `$ _config`
         'categoryPathSeparator'         => category path separator
 
 CSV configurations
--------------------
+------------------
 
 in the protected variable `$ _Entry` you creat the structure of the csv file
 
-- `header` here the column names are written after the other.
+`header` here the column names are written after the other.
 
 Individual column name with `;` separately.
 
 if you need a blank line between the header and the data records, write `\n` in the last column name.
 
-- `fields` here are written contents of the column.
+`fields` here are written contents of the column.
 
 Individual records are written to `#oxid#`  and separated by `|`.
 
-`#oxid#+#oxtitle#`  so will be displayed more conten  in a column.
+`#oxid#+#oxtitle#` so will be displayed more conten  in a column.
 
 `#oxshortdesc#/#oxlongdesc#` then the second output if the first is not available.
 
-- `separator` here the delimiter for the csv file is entered.
+`separator` here the delimiter for the csv file is entered.
 
 various data feeds need different requirements to be able to read the csv file to which with the separator structure, the rows and columns will be defined.
 

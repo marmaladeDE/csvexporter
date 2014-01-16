@@ -57,13 +57,13 @@ CSV Konfigurationen
 
 in der protected Variable `$_entry` erstellt man die Struktur der csv Datei
 
-- `header` hier werden die Spalten Namen nach einander geschrieben.
+`header` hier werden die Spalten Namen nach einander geschrieben.
 
 Einzelne Spaltenname werden mit `;` getrennt.
 
 wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen, `\n` an den letzten Spaltennamen anhängen.
 
-- `fields` hier werden die Inhalte der spalten geschrieben.
+`fields` hier werden die Inhalte der spalten geschrieben.
 
 Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
 
@@ -71,7 +71,7 @@ Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
 
 `#oxshortdesc#/#oxlongdesc#` so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
 
-- `separator` hier wird das Trennzeichen für die csv Datei eingetragen.
+`separator` hier wird das Trennzeichen für die csv Datei eingetragen.
 
 verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können, mit dem Separator wird die Zeilen und Spalten Struktur definiert.
 
