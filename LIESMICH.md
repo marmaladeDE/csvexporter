@@ -80,9 +80,11 @@ Hier noch einige Tipps:
 
 - Die Spalteninhalte werden in Markern `#IHRER MARKER#` geschrieben und mit `|` getrennt.
 
-- Man kann mehrere Marker in einem Datensatz ausgeben, das sieht dann so aus `#Marker 1#+#Marker 2#`.
+- Man kann mehrere Marker in einem Datensatz ausgeben, die werden mit `+` verknüpft.
+Das sieht dann so aus: `#Marker 1#+#Marker 2#`.
 
-- Oder man möchte einen Fallback haben, dann sieht der Marker so aus `#Marker 1#/#Marker 2#`.
+- Oder man möchte einen Fallback haben, dann werden die Markert mit ein `/` verknüpft.
+Das sieht dann so aus: `#Marker 1#/#Marker 2#`.
 
 Eigene Konfigurationen
 ----------------------
