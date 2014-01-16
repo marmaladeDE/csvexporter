@@ -19,7 +19,7 @@ Installing and Configuration
 Notes
 -----
 
-Tested on Oxid CE 4.6.5
+Tested on Oxid CE 4.6.5, 4.7.5, 4.8.1
 
 version
 -------
@@ -57,13 +57,13 @@ CSV configurations
 
 in the protected variable `$ _Entry` you creat the structure of the csv file
 
-`header` here the column names are written after the other.
+- on the `header` here the column names are written after the other.
 
 Individual column name with `;` separately.
 
 if you need a blank line between the header and the data records, write `\n` in the last column name.
 
-`fields` here are written contents of the column.
+- on the `fields` here are written contents of the column.
 
 Individual records are written to `#oxid#`  and separated by `|`.
 
@@ -71,7 +71,7 @@ Individual records are written to `#oxid#`  and separated by `|`.
 
 `#oxshortdesc#/#oxlongdesc#` then the second output if the first is not available.
 
-`separator` here the delimiter for the csv file is entered.
+- on the `separator` here the delimiter for the csv file is entered.
 
 various data feeds need different requirements to be able to read the csv file to which with the separator structure, the rows and columns will be defined.
 

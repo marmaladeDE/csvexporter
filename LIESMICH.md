@@ -19,7 +19,7 @@ Installieren und Konfigurieren
 Hinweise
 --------
 
-Getestet auf Oxid CE 4.6.5
+Getestet auf Oxid CE 4.6.5, 4.7.5, 4.8.1
 
 Version
 -------
