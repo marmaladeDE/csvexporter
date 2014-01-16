@@ -51,13 +51,12 @@ in der protected Variable `$_config`
         'generalVat'                    => MwSt für die Nettopreise
         'netPrices'                     => Nettopreise An/Aus
         'categoryPathSeparator'         => Trennzeichen für die Kategoriepfade
+
  
 CSV Konfigurationen
 -------------------
 
-in der protected Variable `$_entry`
-
-erstellt man die Struktur der csv Datei
+in der protected Variable `$_entry` erstellt man die Struktur der csv Datei
 
 - `header` - hier werden die Spalten Namen nach einander geschrieben.
 

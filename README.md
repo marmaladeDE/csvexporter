@@ -32,32 +32,47 @@ Exporter Configuration
 basic configurations
 --------------------
 
-in the "protected $ _config"
+in the protected variable `$ _config`
 
-'filename' - here you can enter where the file is created and how it is called
+        'export_parents'                => Should parents be shown in file
+        'filename'                      => Export filename relative to this file
+        'limit'                         => limit for export
+        'debug'                         => enable / disable debug-output
+        'silent'                        => enable / disable regular messages
+        'header'                        => enable / disable headerline
+        'langid'                        => LanguageId for which you want to export
+        'shippingcost'                  => shipping cost categories
+        'productLinkPrefix'             => standard product url prefix
+        'geizhalsProductLinkParameters' => geizhals parameters for product
+        'imageurl'                      => standard image url path
+        'inStock'                       => product in stock description
+        'outOfStock'                    => product out of stock description
+        'cutFirstPosArticlenumber'      => cut the first n position from the article number
+        'generalVat'                    => general vat value for net prices
+        'netPrices'                     => net prices true/false
+        'categoryPathSeparator'         => category path separator
 
-'shipping cost' - here you can fill an array with shipping costs
- 
+
 CSV configurations
 -------------------
 
-in the "protected $ _Entry" you creat the structure of the csv file
+in the protected variable `$ _Entry` you creat the structure of the csv file
 
-- 'header' - here the column names are written after the other.
+- `header` - here the column names are written after the other.
 
-Individual column name with ; separately.
+Individual column name with `;` separately.
 
-if you need a blank line between the header and the data records, write \n in the last column name.
+if you need a blank line between the header and the data records, write `\n` in the last column name.
 
-- 'fields' - here are written contents of the column.
+- `fields` - here are written contents of the column.
 
-Individual records are written to #oxid#  and separated by |.
+Individual records are written to `#oxid#`  and separated by `|`.
 
-#oxid#+#oxtitle#  so will be displayed more conten  in a column.
+`#oxid#+#oxtitle#`  so will be displayed more conten  in a column.
 
-#oxshortdesc#/#oxlongdesc# then the second output if the first is not available.
+`#oxshortdesc#/#oxlongdesc#` then the second output if the first is not available.
 
-- 'separator' - here the delimiter for the csv file is entered.
+- `separator` - here the delimiter for the csv file is entered.
 
 various data feeds need different requirements to be able to read the csv file to which with the separator structure, the rows and columns will be defined.
 
@@ -70,13 +85,13 @@ A non existent Extra column to add, but how?
 
 as example: we want the attribute color of the individual variants product
 
-in the "protected $ _Entry"
+in the protected variable `$ _Entry`
 
-- In 'header', we write the new column name "color".
+- In `header`, we write the new column name `color`.
 
-- In 'fields' comes a new marker #color#.
+- In `fields` comes a new marker `#color#`.
 
-- Now has the "getDataByMarker" from the marmCsvExporter.php be extended in our exporter to a marker.
+- Now has the `getDataByMarker($marker)` from the marmCsvExporter.php be extended in our exporter to a marker.
 
 - The new marker we give a new function.
 
