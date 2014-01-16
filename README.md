@@ -78,9 +78,9 @@ various data feeds need different requirements to be able to read the csv file t
 own configurations
 ------------------
 
-can be seen in the individual Exportern all functions from the marmCsvExporter.php override and extend.
+in the individual Exportern can be seen all functions from the **marmCsvExporter.php** override and extend.
 
-A non existent Extra column to add, but how?
+add a non exist column, but how?
 
 as example: we want the attribute color of the individual variants product
 
@@ -90,7 +90,7 @@ in the protected variable `$ _Entry`
 
 - In `fields` comes a new marker `#color#`.
 
-- Now has the `getDataByMarker($marker)` from the marmCsvExporter.php be extended in our exporter to a marker.
+- Now has the `getDataByMarker($marker)` from the **marmCsvExporter.php** be extended in our exporter to a marker.
 
 - The new marker we give a new function.
 

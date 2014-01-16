@@ -55,15 +55,13 @@ in der protected Variable `$_config`
 CSV Konfigurationen
 -------------------
 
-in der protected Variable `$_entry` erstellt man die Struktur der csv Datei
+In der protected Variable `$_entry` wird die Struktur der csv Datei erstellt.
 
-`header` hier werden die Spalten Namen nach einander geschrieben.
+- in dem `header` schreiben wir nach einander die Spalten Namen, die mit `;` getrennt werden.
 
-Einzelne Spaltenname werden mit `;` getrennt.
+wenn man eine Leerzeile zwischen der Kopfzeile und den Datensätzen braucht, schreiben wir ein `\n` an den letzten Spaltennamen.
 
-wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen, `\n` an den letzten Spaltennamen anhängen.
-
-`fields` hier werden die Inhalte der spalten geschrieben.
+- in den `fields` werden die Inhalte der spalten geschrieben.
 
 Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
 
@@ -71,27 +69,29 @@ Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
 
 `#oxshortdesc#/#oxlongdesc#` so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
 
-`separator` hier wird das Trennzeichen für die csv Datei eingetragen.
+- in dem `separator` wird das Trennzeichen für die csv Datei eingetragen.
 
-verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können, mit dem Separator wird die Zeilen und Spalten Struktur definiert.
+Mit dem Separator wird die Zeilen und Spalten Struktur definiert.
 
 Eigene Konfigurationen
 ----------------------
 
-man kann in den einzelnen Exportern alle Funktionen aus der marmCsvExporter.php überschreiben und erweitern.
+Man kann in den einzelnen Exportern alle Funktionen aus der **marmCsvExporter.php** überschreiben und erweitern.
 
-Eine nicht vorhandene extra spalte hinzufügen, aber wie?
+Eine nicht vorhandene Spalte hinzufügen, aber wie?
 
 als Bsp.: wollen wir das Attribut Farbe der einzelnen Varianten Produkte auslesen
 
-in der protected Variable `$_entry`
+in der protected Variable `$_entry`:
 
 - in `header` schreiben wir den neuen Spaltennamen `Farbe`.
 
 - in `fields` kommt ein neuer Marker `#color#`.
 
-- jetzt muss die Funktion `getDataByMarker($marker)` aus der marmCsvExporter.php in unserem exporter um ein Marker erweitert werden.
+im Export Script:
+
+- jetzt muss die Funktion `getDataByMarker($marker)` aus der **marmCsvExporter.php** in unserem exporter um ein Marker erweitert werden.
 
 - dem neuen Marker geben wir eine Funktion.
 
-- und zum Schluss wir die eigentlich Funktion in unserem exporter geschrieben die die Farbe der Varianten Produkte ausließt und den an den Marker übergibt.
+- und zum Schluss wird die eigentliche Funktion in unserem exporter geschrieben, die die Farbe der Varianten Produkte ausließt und den an den Marker übergibt.
