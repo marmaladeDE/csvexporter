@@ -1,9 +1,10 @@
-#CSV Exporter
+CSV Exporter
+============
 
-Eine Sammlung von Skripten, die über einen cronjob Shop Produkte in eine csv Datei exportiert
+Eine Sammlung von Skripten, die über einen cronjob Shop Produkte in eine csv Datei exportieren
 
-##Installieren und Konfigurieren
-
+Installieren und Konfigurieren
+------------------------------
 1.  Legen Sie das gesamte Modul in Ihrem Shop in
 
           modules/marm/csvexporter
@@ -15,51 +16,69 @@ Eine Sammlung von Skripten, die über einen cronjob Shop Produkte in eine csv Dat
 4.  Genießen Sie das Ergebnis
 
 
-##Hinweise
-
+Hinweise
+--------
 
 Getestet auf Oxid CE 4.6.5
 
-##Version
-
+Version
+-------
 Aktuelle Version 1.0
 
 
-#Exporter Konfigurieren
+Exporter Konfigurieren
+======================
 
-##Grund Konfigurationen
+Grund Konfigurationen
+---------------------
 
-in der "protected $_config" 
+in der protected Variable `$_config` 
 
-'filename' - hier kann man eingeben wo die Datei erstellt wird und wie sie heißt
-
-'shippingcost' - hier kann man ein array füllen mit Versandkosten
+        'export_parents'                => Anzeigen von Eltern Produkten in der csv Datei
+        'filename'                      => Pfad und Dateiname
+        'limit'                         => Limit für Export
+        'debug'                         => debug Option An/Aus, für Entwickler
+        'silent'                        => debug Ausgaben An/Aus, für Entwickler
+        'header'                        => Kopfzeile An/Aus
+        'langid'                        => Sprach id, für welche Sprache Exportiert werden soll
+        'shippingcost'                  => Versand Optionen      
+        'productLinkPrefix'             => Standard Produkt URL Präfix
+        'geizhalsProductLinkParameters' => Exporter spezifischer Produkt Parameter    
+        'imageurl'                      => Pfad der zu Exportierenden Produkt Bilder
+        'inStock'                       => Ausgabe, wenn Produkt Lageberstand hat
+        'outOfStock'                    => Ausgabe, wenn Produkt kein Lagerbestand hat      
+        'cutFirstPosArticlenumber'      => Die ersten x Zeichen der Artikelnummer abschneiden
+        'generalVat'                    => MwSt für die Nettopreise
+        'netPrices'                     => Nettopreise An/Aus
+        'categoryPathSeparator'         => Trennzeichen für die Kategoriepfade
  
-##CSV Konfigurationen
+CSV Konfigurationen
+-------------------
 
-in der "protected $_entry"
+in der protected Variable `$_entry`
 
 erstellt man die Struktur der csv Datei
 
-- 'header' - hier werden die Spalten Namen nach einander geschrieben.
+- `header` - hier werden die Spalten Namen nach einander geschrieben.
 
-Einzelne Spaltenname werden mit ; getrennt.
+Einzelne Spaltenname werden mit `;` getrennt.
 
-wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen, \n an den letzten Spaltennamen anhängen.
+wenn man eine Leerzeile braucht zwischen der Kopfzeile und den Datensätzen, `\n` an den letzten Spaltennamen anhängen.
 
-- 'fields' - hier werden die Inhalte der spalten geschrieben.
+- `fields` - hier werden die Inhalte der spalten geschrieben.
 
-Einzelne Datensätze werden in #oxid# geschrieben und mit | getrennt.
+Einzelne Datensätze werden in `#oxid#` geschrieben und mit `|` getrennt.
 
-#oxid#+#oxtitle# so werden mehrere Inhalte in einer spalte ausgegeben.
+`#oxid#+#oxtitle#` so werden mehrere Inhalte in einer spalte ausgegeben.
 
-#oxshortdesc#/#oxlongdesc# so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
+`#oxshortdesc#/#oxlongdesc#` so wird das zweite ausgegeben falls das erste nicht vorhanden ist.
 
-- 'separator' - hier wird das Trennzeichen für die csv Datei eingetragen.
+- `separator` - hier wird das Trennzeichen für die csv Datei eingetragen.
 
 verschiedene Datenfeeds brauchen unterschiedliche Anforderungen an die csv Datei um die lesen zu können, mit dem Separator wird die Zeilen und Spalten Struktur definiert.
 
-##Eigene Konfigurationen
+Eigene Konfigurationen
+----------------------
 
 man kann in den einzelnen Exportern alle Funktionen aus der marmCsvExporter.php überschreiben und erweitern.
 
@@ -67,13 +86,13 @@ Eine nicht vorhandene extra spalte hinzufügen, aber wie?
 
 als Bsp.: wollen wir das Attribut Farbe der einzelnen Varianten Produkte auslesen
 
-in der "protected $_entry"
+in der protected Variable `$_entry`
 
-- in 'header' schreiben wir den neuen Spaltennamen "Farbe".
+- in `header` schreiben wir den neuen Spaltennamen `Farbe`.
 
-- in 'fields' kommt ein neuer Marker #color#.
+- in `fields` kommt ein neuer Marker `#color#`.
 
-- jetzt muss die Funktion "getDataByMarker" aus der marmCsvExporter.php in unserem exporter um ein Marker erweitert werden.
+- jetzt muss die Funktion `getDataByMarker($marker)` aus der marmCsvExporter.php in unserem exporter um ein Marker erweitert werden.
 
 - dem neuen Marker geben wir eine Funktion.
 
