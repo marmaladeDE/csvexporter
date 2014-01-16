@@ -103,5 +103,4 @@ Bsp.: Wir wollen das Attribut **Farbe** der einzelnen Variantenprodukte in die C
 Dazu schreiben wir im `header` den neuen Spaltennamen `Farbe`. In das Feld `fields` kommt ein neuer Marker namens `#color#`.
 Diesen Marker müssen wir nun dynamisch befüllen. Marker werden in der Funktion `getDataByMarker($marker)` definiert, diese müssen wir erweitern.
 Hier bekommt der Marker einen eigenen Funktionsaufruf. Danach können wir die eigentliche Funktion in unserem Exporterscript schreiben,
-die die Farbe der Produkte ausliest. Als Beispiel sehen Sie sich Die Funktion `getSeoUrl()` in den mitgelieferten Exportern,
-von geizhals oder google.
+die die Farbe der Produkte ausliest. Als Beispiel sehen Sie sich Die Funktion `getSeoUrl()` in den mitgelieferten Exportern von Geizhals oder Google.
