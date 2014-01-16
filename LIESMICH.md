@@ -80,11 +80,15 @@ Hier noch einige Tipps:
 
 - Die Spalteninhalte werden in Markern `#IHRER MARKER#` geschrieben und mit `|` getrennt.
 
-- Man kann mehrere Marker in einem Datensatz ausgeben, die werden mit `+` verknüpft.
+- Man kann Marker miteinander verknüpft in einem Datensatz ausgeben, die werden mit `+` geschrieben.
 Das sieht dann so aus: `#Marker 1#+#Marker 2#`.
 
-- Oder man möchte einen Fallback haben, dann werden die Markert mit ein `/` verknüpft.
+- Oder man möchte einen Fallback haben, dann werden die Marker mit ein `/` geschrieben.
+Das bedeutet wenn `#Marker 1#` leer ist wird `#Marker 2#` ausgegeben.
 Das sieht dann so aus: `#Marker 1#/#Marker 2#`.
+
+- Die Operatoren können gemischt werden und einen Spalteninhalt erstellen der aus Fallback und Verknüpfung besteht.
+zB. `#Marker 1#/#Marker 2#+#Marker 3#`, hier wird entweder Marker 1 oder Marker 2 mit Marker 3 ausgegeben.
 
 Eigene Konfigurationen
 ----------------------
@@ -97,7 +101,7 @@ Eine nicht vorhandene Spalte hinzufügen, aber wie?
 Bsp.: Wir wollen das Attribut **Farbe** der einzelnen Variantenprodukte in die CSV-Datei exportiert haben.
 
 Dazu schreiben wir im `header` den neuen Spaltennamen `Farbe`. In das Feld `fields` kommt ein neuer Marker namens `#color#`.
-
-Nun schreiben wir unsere Funktionen, dazu empfiehlt sich die Funktion `getDataByMarker($marker)` aus der **marmCsvExporter.php** zu erweitern.
-In der wir einen neuen Marker setzen und dem eine Fuktion geben.
-Danach können wir die eigentliche Funktion in unserem Exporterscript schreiben die die Farbe der Produkte ausliest.
+Diesen Marker müssen wir nun dynamisch befüllen. Marker werden in der Funktion `getDataByMarker($marker)` definiert, diese müssen wir erweitern.
+Hier bekommt der Marker einen eigenen Funktionsaufruf. Danach können wir die eigentliche Funktion in unserem Exporterscript schreiben,
+die die Farbe der Produkte ausliest. Als Beispiel sehen Sie sich Die Funktion `getSeoUrl()` in den mitgelieferten Exportern,
+von geizhals oder google.
