@@ -15,6 +15,7 @@ class marmCsvExporter
 {
     protected $manufacturersTitle = array();
     protected $categoriesTitle = array();
+    protected $contentPage = array();
     protected $googleCategoriesTitle = array();
     protected $entryFields = array();
     
@@ -68,6 +69,7 @@ class marmCsvExporter
         $this->cacheCategoriesTitles();
         $this->cacheGoogleCategoriesTitles();
         $this->cacheManufacturesTitles();
+        $this->cacheContentPages();     // for [{oxcontent... in long description
         $parents = $this->getParentProducts();
         $this->handleParents($parents);
         
@@ -159,7 +161,7 @@ class marmCsvExporter
             case '#oxshortdesc#':
 		return $this->getShortDescription();
             case '#oxlongdesc#':
-                return $this->getLongDescription();
+                return $this->exchOxContent($this->getLongDescription());
             case '#categoryPath#':
                 return $this->getCategoryPath();
             case '#google_categoryPath#':
@@ -172,6 +174,11 @@ class marmCsvExporter
                 return $this->getProductAvailability();
             case '#oxprice#':
                 return $this->getProductPrice();
+            case '#baseprice#':
+                if ($this->tempProduct['OXUNITQUANTITY'] != 0)
+                    return round($this->getProductPrice()/$this->tempProduct['OXUNITQUANTITY'],2);
+                else
+                    return 0;
             case '#brand#':
                 return $this->getManufacturesTitle();
             case '#oxean#':
@@ -241,7 +248,16 @@ class marmCsvExporter
                 
                 $replace[] = $data;
             }
-            $concatenated[] = implode(" ", $replace); //concatenare data on the column and leave a space between them
+            // if the column must be saved as quoted string
+            if($this->_config['quote'])
+            {
+                $quote = '"';
+            }
+            else 
+            {
+                $quote = '';
+            }
+            $concatenated[] = $quote . implode(" ", $replace) . $quote; //concatenare data on the column and leave a space between them
         }
     
         $entry = implode( $this->_entry['separator'], $concatenated );
@@ -638,6 +654,26 @@ class marmCsvExporter
     }
     
     /**
+     * caching the manufactures titles
+     * 
+     * fill $this->manufacturersTitle
+     */
+    public function cacheContentPages()
+    {
+        $contentpages = array();
+        $query="SELECT oxcontents.OXLOADID, oxcontents.OXCONTENT FROM oxcontents";
+        $rs = mysql_query($query);
+        if ($rs) 
+        {
+            while($row = mysql_fetch_array($rs)) 
+            {
+                $contentpages[$row[0]] = $row[1];
+            }
+        }
+        $this->contentPage = $contentpages;
+    }
+    
+    /**
      * get manufactures title
      * 
      * @return string
@@ -663,6 +699,16 @@ class marmCsvExporter
         }
         
         return '';
+    }
+    
+    /**
+     * get content page text
+     * 
+     * @return string
+     */
+    public function getContentPageText($ident)
+    {
+        return $this->contentPage[$ident];
     }
       
     /**
@@ -896,5 +942,18 @@ class marmCsvExporter
         }
         print_r($this->tempProduct['oxtprice']);
         return $uvp;
+    }
+    
+    /**
+     * exchange [{ oxcontent ident="..." }] in long description
+     * 
+     * @return string
+     */
+    public function exchOxContent($description)
+    {
+        preg_match('/\[{.*oxcontent.*="(.*)".*}]/', $description, $matches);
+        $description = preg_replace('/\[{.*oxcontent.*="(.*)".*}]/', $this->getContentPageText($matches[1]), $description);
+
+        return $description;
     }
 }
