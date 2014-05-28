@@ -15,6 +15,7 @@ class marmCsvExporter
 {
     protected $manufacturersTitle = array();
     protected $categoriesTitle = array();
+    protected $contentPage = array();
     protected $googleCategoriesTitle = array();
     protected $entryFields = array();
     
@@ -68,6 +69,7 @@ class marmCsvExporter
         $this->cacheCategoriesTitles();
         $this->cacheGoogleCategoriesTitles();
         $this->cacheManufacturesTitles();
+        $this->cacheContentPages();     // for [{oxcontent... in long description
         $parents = $this->getParentProducts();
         $this->handleParents($parents);
         
@@ -159,7 +161,7 @@ class marmCsvExporter
             case '#oxshortdesc#':
 		return $this->getShortDescription();
             case '#oxlongdesc#':
-                return $this->getLongDescription();
+                return $this->exchOxContent($this->getLongDescription());
             case '#categoryPath#':
                 return $this->getCategoryPath();
             case '#google_categoryPath#':
@@ -172,6 +174,87 @@ class marmCsvExporter
                 return $this->getProductAvailability();
             case '#oxprice#':
                 return $this->getProductPrice();
+            case '#baseprice#':
+                if ($this->tempProduct['OXUNITQUANTITY'] != 0)
+                    return round($this->getProductPrice()/$this->tempProduct['OXUNITQUANTITY'],2);
+                else
+                    return 0;
+            case '#unitpricingmeasure#':
+                if ( empty($this->tempProduct['OXUNITNAME']) )
+                    break;
+                $amount = $this->tempProduct['OXUNITQUANTITY'];
+                switch ($this->tempProduct['OXUNITNAME']) {
+                    case '_UNIT_KG':
+                        $unitMeasure = 'kg';
+                        break;
+                    case '_UNIT_G':
+                        $unitMeasure = 'g';
+                        break;
+                    case '_UNIT_L':
+                        $unitMeasure = 'l';
+                        break;
+                    case '_UNIT_ML':
+                        $unitMeasure = 'ml';
+                        break;
+                    case '_UNIT_CM':
+                        $unitMeasure = 'cm';
+                        break;
+                    case '_UNIT_MM':
+                        $unitMeasure = 'mm';
+                        break;
+                    case '_UNIT_M':
+                        $unitMeasure = 'm';
+                        break;
+                    case '_UNIT_M2':
+                        $unitMeasure = 'm²';
+                        break;
+                    case '_UNIT_M3':
+                        $unitMeasure = 'm³';
+                        break;
+                    default:
+                        $returnValue = preg_match('/[0-9]*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
+                        $amount = $this->tempProduct['OXUNITQUANTITY'] * $matches[0][0];
+                        $returnValue = preg_match('/[^0-9 ].*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
+                        $unitMeasure = $matches[0][0];
+                        break;
+                }
+                return $amount . ' ' . $unitMeasure;
+            case '#unitpricingbasemeasure#':
+                if ( empty($this->tempProduct['OXUNITNAME']) )
+                    break;
+                switch ($this->tempProduct['OXUNITNAME']) {
+                    case '_UNIT_KG':
+                        $baseMeasure = '1 kg';
+                        break;
+                    case '_UNIT_G':
+                        $baseMeasure = '1 g';
+                        break;
+                    case '_UNIT_L':
+                        $baseMeasure = '1 l';
+                        break;
+                    case '_UNIT_ML':
+                        $baseMeasure = '1 ml';
+                        break;
+                    case '_UNIT_CM':
+                        $baseMeasure = '1 cm';
+                        break;
+                    case '_UNIT_MM':
+                        $baseMeasure = '1 mm';
+                        break;
+                    case '_UNIT_M':
+                        $baseMeasure = '1 m';
+                        break;
+                    case '_UNIT_M2':
+                        $baseMeasure = '1 m²';
+                        break;
+                    case '_UNIT_M3':
+                        $baseMeasure = '1 m³';
+                        break;
+                    default:
+                        $baseMeasure = $this->tempProduct['OXUNITNAME'];
+                        break;
+                }
+                return $baseMeasure;
             case '#brand#':
                 return $this->getManufacturesTitle();
             case '#oxean#':
@@ -241,7 +324,16 @@ class marmCsvExporter
                 
                 $replace[] = $data;
             }
-            $concatenated[] = implode(" ", $replace); //concatenare data on the column and leave a space between them
+            // if the column must be saved as quoted string
+            if(isset($this->_config['quote']))
+            {
+                $quote = '"';
+            }
+            else 
+            {
+                $quote = '';
+            }
+            $concatenated[] = $quote . implode(" ", $replace) . $quote; //concatenare data on the column and leave a space between them
         }
     
         $entry = implode( $this->_entry['separator'], $concatenated );
@@ -366,13 +458,15 @@ class marmCsvExporter
     public function cacheGoogleCategoriesTitles()
     {
         $googleCategories = array();
-        $query = "SELECT OXID, FCGOOGLETAXONOMY FROM oxcategories";
+        //$query = "SELECT OXID, FCGOOGLETAXONOMY FROM oxcategories";
+        $query = "SELECT OXID, JXGOOGLETAXONOMY FROM oxcategories";
         $rs = mysql_query($query);
         if ($rs)
         {
             while($row = mysql_fetch_array($rs))
             {
-                $googleCategories[$row[0]] = array('title' => base64_decode($row[1]));
+                //$googleCategories[$row[0]] = array('title' => base64_decode($row[1]));
+                $googleCategories[$row[0]] = array('title' => $row[1]);
             }
         }
         $this->googleCategoriesTitle = $googleCategories;
@@ -638,6 +732,26 @@ class marmCsvExporter
     }
     
     /**
+     * caching the manufactures titles
+     * 
+     * fill $this->manufacturersTitle
+     */
+    public function cacheContentPages()
+    {
+        $contentpages = array();
+        $query="SELECT oxcontents.OXLOADID, oxcontents.OXCONTENT FROM oxcontents";
+        $rs = mysql_query($query);
+        if ($rs) 
+        {
+            while($row = mysql_fetch_array($rs)) 
+            {
+                $contentpages[$row[0]] = $row[1];
+            }
+        }
+        $this->contentPage = $contentpages;
+    }
+    
+    /**
      * get manufactures title
      * 
      * @return string
@@ -663,6 +777,16 @@ class marmCsvExporter
         }
         
         return '';
+    }
+    
+    /**
+     * get content page text
+     * 
+     * @return string
+     */
+    public function getContentPageText($ident)
+    {
+        return $this->contentPage[$ident];
     }
       
     /**
@@ -890,11 +1014,26 @@ class marmCsvExporter
     public function getUVP()
     {
         $uvp = '';
-        if($this->tempProduct['oxtprice'] != '0')
+        if($this->tempProduct['OXTPRICE'] != '0')
         {
-            $uvp = $this->tempProduct['oxtprice'];
+            $uvp = $this->tempProduct['OXTPRICE'];
         }
-        print_r($this->tempProduct['oxtprice']);
+        print_r($this->tempProduct['OXTPRICE']);
         return $uvp;
+    }
+    
+    /**
+     * exchange [{ oxcontent ident="..." }] in long description
+     * 
+     * @return string
+     */
+    public function exchOxContent($description)
+    {
+        preg_match('/\[{.*oxcontent.*="(.*)".*}]/', $description, $matches);
+        if ( !empty($matches) ) {
+            $description = preg_replace('/\[{.*oxcontent.*="(.*)".*}]/', $this->getContentPageText($matches[1]), $description);
+        }
+
+        return $description;
     }
 }
